@@ -1,0 +1,122 @@
+server {
+
+    listen 80;
+    server_name mihirsingh.com;
+
+    location / {
+
+        root       /srv/mihirsingh.com/www;
+        index      index.html;
+        add_header X-Endpoint "{{inventory_hostname}}";
+
+    }
+
+}
+
+server {
+
+    listen 80;
+    server_name citruspi.io;
+
+    location / {
+
+        root        /srv/citruspi.io/www/_site;
+        index       index.html;
+        error_page   404        /404;
+        add_header  X-Endpoint "{{inventory_hostname}}";
+
+    }
+
+}
+
+server {
+
+    listen  80;
+    server_name  reactirc.citruspi.io;
+
+    location / {
+
+        root    /srv/citruspi.io/reactirc;
+        index   index.html;
+        add_header  X-Endpoint "{{inventory_hostname}}";
+
+    }
+
+
+}
+
+server {
+    
+    listen 80;
+    server_name spotify-notifications.citruspi.io;
+
+    location / {
+
+        root       /srv/citruspi.io/spotify-notifications;
+        index      index.html;
+        add_header X-Endpoint "{{inventory_hostname}}";
+
+    }
+
+}
+
+server {
+
+    listen       80;
+    server_name  resume.mihirsingh.com;
+
+    location / {
+
+        root       /srv/mihirsingh.com/resume;
+        index      resume.html;
+        add_header X-Endpoint "{{inventory_hostname}}";
+    
+    }
+
+}
+
+server {
+
+    listen       80;
+    server_name  gpg.mihirsingh.com;
+    add_header   Content-Type text/plain;
+
+    location / {
+
+        root       /srv/mihirsingh.com/gpg;
+        index      citruspi.key;
+        add_header X-Endpoint "{{inventory_hostname}}";   
+
+    }
+
+}
+
+server {
+
+    listen      80;
+    server_name rhokthehood.com;
+
+    location / {
+
+        root        /srv/rhokthehood.com/www;
+        index       index.html;
+        error_page  404         /404;
+        add_header  X-Endpoint "{{inventory_hostname}}";
+
+    }
+
+}
+
+server {
+
+    listen      80;
+    server_name hfossblog.citruspi.io;
+
+    location / {
+
+        root        /srv/citruspi.io/hfossblog;
+        autoindex   on;
+        add_header  X-Endpoint "{{inventory_hostname}}";
+    }
+
+}
