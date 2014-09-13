@@ -1,0 +1,45 @@
+---
+- vars_prompt:
+    username: "Username "
+    password: "Password "
+    github: "GitHub Profile "
+  hosts: bootstrap
+  user: root
+  tasks:
+  - name: Disable SSH password login
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^PasswordAuthentication"
+      line="PasswordAuthentication no"
+      state=present
+  - name: Disable SSH root login
+    lineinfile: >
+      dest=/etc/ssh/sshd_config
+      regexp="^PermitRootLogin"
+      line="PermitRootLogin no"
+      state=present
+  - name: Restart the SSH daemon
+    service: name=sshd state=restarted
+  - name: Add the deploy user
+    user: name=deploy state=present group=wheel
+  - name: Add the new user
+    user: name={{username}} state=present password={{password}} group=wheel
+  - name: Download public keys
+    get_url: url=https://github.com/{{github}}.keys dest=/tmp/new_user.keys
+    delegate_to: 127.0.0.1
+  - name: Add an authorized key to the new user
+    authorized_key: user={{username}} key="{{ lookup('file', '/tmp/new_user.keys') }}"
+  - name: Add an authorized key to the deploy
+    authorized_key: user=deploy key="{{ lookup('file', '/tmp/new_user.keys') }}"
+  - name: Set NOPASSWD for deploy on sudo
+    lineinfile: >
+      dest=/etc/sudoers
+      insertafter=EOF
+      line="deploy ALL=(ALL) NOPASSWD: ALL"
+      regexp="deploy ALL=(ALL) NOPASSWD: ALL"
+      state=present
+  - name: Set the machine hostname
+    hostname: name="{{inventory_hostname}}"
+  - name: Install and enable the EPEL repo
+    command: rpm -Uvh --replacepkgs http://mirrors.rit.edu/epel/beta/7/x86_64/epel-release-7-1.noarch.rpm
+    sudo: True
