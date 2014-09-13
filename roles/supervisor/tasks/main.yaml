@@ -1,0 +1,7 @@
+---
+- name: Install Supervisord
+  yum: name=supervisor state=present
+  sudo: True
+- name: Start Supervisord
+  service: name=supervisord state=started enabled=yes
+  sudo: True
