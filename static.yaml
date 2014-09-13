@@ -1,0 +1,34 @@
+---
+- hosts: static
+  vars:
+    projects:
+      - { domain: 'mihirsingh.com', subdomain: 'www', repo: 'https://github.com/citruspi/mihirsingh.com.git', branch: 'master' }
+      - { domain: 'mihirsingh.com', subdomain: 'gpg', repo: 'https://github.com/citruspi/gpg.git', branch: 'master' }
+      - { domain: 'mihirsingh.com', subdomain: 'resume', repo: 'https://github.com/citruspi/resume.git', branch: 'master' }
+      - { domain: 'citruspi.io', subdomain: 'spotify-notifications', repo: 'https://github.com/citruspi/spotify-notifications.citruspi.io.git', branch: 'master' }
+      - { domain: 'citruspi.io', subdomain: 'www', repo: 'https://github.com/citruspi/citruspi.io.git', branch: 'built' }
+      - { domain: 'rhokthehood.com', subdomain: 'www', repo: 'https://github.com/citruspi/RHokTheHood.git', branch: 'master' }
+      - { domain: 'citruspi.io', subdomain: 'hfossblog', repo: 'https://github.com/citruspi/hfoss-blog.git', branch: 'master' }
+      - { domain: 'citruspi.io', subdomain: 'reactirc', repo: 'https://github.com/citruspi/reactirc.citruspi.io.git', branch: 'master' }
+  user: citruspi
+  roles:
+  - nginx
+  - git
+  tasks:
+  - name: Create project directory
+    file: state=directory path=/srv/{{item.domain}}/{{item.subdomain}}
+    with_items: projects
+    sudo: True
+  - name: Git clone project
+    git: repo={{item.repo}} dest=/srv/{{item.domain}}/{{item.subdomain}} version={{item.branch}}
+    with_items: projects
+    sudo: True
+  - name: Update Nginx conf
+    template: src=templates/static/nginx.j2 dest=/etc/nginx/conf.d/site.conf
+    sudo: True
+    notify:
+       - reload nginx
+  handlers:
+  - name: reload nginx
+    command: service nginx reload
+    sudo: True
