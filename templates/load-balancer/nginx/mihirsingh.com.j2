@@ -1,0 +1,68 @@
+server {
+
+    listen      	80;
+    server_name		www.mihirsingh.com;
+    return 		301			$scheme://mihirsingh.com$request_uri;
+
+}
+
+server {
+
+    listen       	80;
+    server_name		mihirsingh.com;
+
+    location / {
+
+	proxy_pass 		http://static.citruspi;
+	proxy_set_header	Host             		$host;
+        proxy_set_header   	X-Real-IP        		$remote_addr;
+        proxy_set_header   	X-Forwarded-For  		$proxy_add_x_forwarded_for;    
+
+    }
+
+    location /Spotify-Notifications {
+
+        return		301 	http://spotify-notifications.citruspi.io;
+
+    }
+
+    location /kali-on-chromebook {
+
+        return		301	https://citruspi.io/kali-on-chromebook/;
+
+    }
+
+}
+
+server {
+
+    listen       	80;
+    server_name  	gpg.mihirsingh.com;
+    add_header		Content-Type		text/plain;
+
+    location / {
+
+	proxy_pass 		http://static.citruspi;
+        proxy_set_header   	Host             		$host;
+        proxy_set_header   	X-Real-IP       	 	$remote_addr;         
+        proxy_set_header	X-Forwarded-For			$proxy_add_x_forwarded_for; 
+
+    }
+
+}
+
+server {
+
+    listen       	80;
+    server_name		resume.mihirsingh.com;
+  
+    location / {
+
+        proxy_pass 		http://static.citruspi;
+        proxy_set_header   	Host             		$host;
+        proxy_set_header   	X-Real-IP        		$remote_addr;
+        proxy_set_header	X-Forwarded-For			$proxy_add_x_forwarded_for;
+
+    }
+
+}
