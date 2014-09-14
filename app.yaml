@@ -19,6 +19,7 @@
   - pip
   - virtualenv
   - supervisor
+  - stunnel
   tasks:
   - name: Create Python project directories
     file: state=directory path=/apps/{{item.domain}}/{{item.subdomain}}
@@ -58,7 +59,15 @@
     sudo: True
     notify:
       - reload nginx
+  - name: Copy the Stunnel config
+    template: src=templates/apps/stunnel/stunnel.conf.j2 dest=/etc/stunnel/stunnel.conf
+    sudo: True
+    notify:
+      - reload stunnel
   handlers:
   - name: reload nginx
     command: service nginx reload
+    sudo: True
+  - name: reload stunnel
+    command: service stunnel reload
     sudo: True

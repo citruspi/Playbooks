@@ -2,6 +2,7 @@
 - hosts: database
   user: deploy
   roles:
+  - stunnel
   - redis
   tasks:
   - name: Set Redis password
@@ -13,7 +14,15 @@
     sudo: True
     notify:
       - reload redis
+  - name: Copy the Stunnel config
+    template: src=templates/database/stunnel/stunnel.conf.j2 dest=/etc/stunnel/stunnel.conf
+    sudo: True
+    notify:
+      - reload stunnel
   handlers:
   - name: reload redis
     service: name=redis state=restarted
+    sudo: True
+  - name: reload stunnel
+    command: service stunnel reload
     sudo: True
