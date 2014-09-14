@@ -1,0 +1,19 @@
+---
+- hosts: database
+  user: deploy
+  roles:
+  - redis
+  tasks:
+  - name: Set Redis password
+    lineinfile: >
+      dest=/etc/redis.conf
+      regexp="^requirepass"
+      line="requirepass {{redis_password}}"
+      state=present
+    sudo: True
+    notify:
+      - reload redis
+  handlers:
+  - name: reload redis
+    service: name=redis state=restarted
+    sudo: True
