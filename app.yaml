@@ -8,10 +8,10 @@
       - { conf: 'wintergarten.conf' }
     supervisor_confs:
       - { conf: 'wintergarten' }
-      - { conf: 'rhokthehood-beta' }
+      - { conf: 'rhokthehood' }
     python_projects:
       - { domain: 'citruspi.io', subdomain: 'wintergarten-api', repo: 'https://github.com/citruspi/Wintergarten-API.git', branch: 'master' }
-      - { domain: 'rhokthehood.com', subdomain: 'beta', repo: 'https://github.com/citruspi/RHokTheHood.git', branch: 'pythonification' }
+      - { domain: 'rhokthehood.com', subdomain: 'www', repo: 'https://github.com/citruspi/RHokTheHood.git', branch: 'pythonification' }
   user: deploy
   roles:
   - nginx
