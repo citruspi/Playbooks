@@ -42,4 +42,3 @@
     hostname: name="{{inventory_hostname}}"
   - name: Install and enable the EPEL repo
     command: rpm -Uvh --replacepkgs http://mirrors.rit.edu/epel/beta/7/x86_64/epel-release-7-1.noarch.rpm
-    sudo: True
