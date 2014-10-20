@@ -1,0 +1,7 @@
+---
+- name: Install Node.js
+  yum: name=nodejs state=present
+  sudo: True
+- name: Install NPM
+  yum: name=npm state=present
+  sudo: True
