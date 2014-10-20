@@ -1,0 +1,4 @@
+---
+- name: Install Bower
+  npm: name=bower global=yes
+  sudo: True
