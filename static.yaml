@@ -7,22 +7,30 @@
       - { domain: 'mihirsingh.com', subdomain: 'resume', repo: 'https://github.com/citruspi/resume.git', branch: 'master' }
       - { domain: 'citruspi.io', subdomain: 'spotify-notifications', repo: 'https://github.com/citruspi/spotify-notifications.citruspi.io.git', branch: 'master' }
       - { domain: 'citruspi.io', subdomain: 'www', repo: 'https://github.com/citruspi/citruspi.io.git', branch: 'built' }
-      - { domain: 'rhokthehood.com', subdomain: 'www', repo: 'https://github.com/citruspi/RHokTheHood.git', branch: 'master' }
+      - { domain: 'rhokthehood.com', subdomain: 'www', repo: 'https://github.com/citruspi/RHoKTheHood.git', branch: 'master', make: True}
       - { domain: 'citruspi.io', subdomain: 'hfossblog', repo: 'https://github.com/citruspi/hfoss-blog.git', branch: 'master' }
       - { domain: 'citruspi.io', subdomain: 'reactirc', repo: 'https://github.com/citruspi/reactirc.citruspi.io.git', branch: 'master' }
   user: citruspi
   roles:
   - nginx
+  - nodejs
+  - bower
+  - gulp
   - git
   tasks:
+  - name: Set directory owner
+    shell: 'chown {{ansible_ssh_user}}:root /srv;'
+    sudo: True
   - name: Create project directory
     file: state=directory path=/srv/{{item.domain}}/{{item.subdomain}}
     with_items: projects
-    sudo: True
   - name: Git clone project
     git: repo={{item.repo}} dest=/srv/{{item.domain}}/{{item.subdomain}} version={{item.branch}}
     with_items: projects
-    sudo: True
+  - name: Build projects
+    shell: 'cd /srv/{{item.domain}}/{{item.subdomain}}; make'
+    with_items: projects
+    when: item.make is defined
   - name: Update Nginx conf
     template: src=templates/static/nginx.j2 dest=/etc/nginx/conf.d/site.conf
     sudo: True
