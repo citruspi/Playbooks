@@ -14,9 +14,6 @@
   user: citruspi
   roles:
   - nginx
-  - nodejs
-  - bower
-  - gulp
   - git
   tasks:
   - name: Set directory owner
@@ -39,7 +36,7 @@
     file: path=/tmp/{{item.domain}}-{{item.subdomain}}-latest state=directory
     with_items: projects20
   - name: Unarchive project builds
-    unarchive: src=/tmp/{{item.domain}}-{{item.subdomain}}-latest.zip dest=/tmp/{{item.domain}}-{{item.subdomain}}-latest copy=no 
+    unarchive: src=/tmp/{{item.domain}}-{{item.subdomain}}-latest.zip dest=/tmp/{{item.domain}}-{{item.subdomain}}-latest copy=no
     with_items: projects20
   - name: Remove previous project build
     file: path=/srv/{{item.domain}}/{{item.subdomain}} state=absent
