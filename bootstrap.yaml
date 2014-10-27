@@ -1,9 +1,5 @@
 ---
-- vars_prompt:
-    username: "Username "
-    password: "Password "
-    github: "GitHub Profile "
-  hosts: bootstrap
+- hosts: bootstrap
   user: root
   tasks:
   - name: Disable SSH password login
@@ -22,15 +18,10 @@
     service: name=sshd state=restarted
   - name: Add the deploy user
     user: name=deploy state=present group=wheel
-  - name: Add the new user
-    user: name={{username}} state=present password={{password}} group=wheel
-  - name: Download public keys
-    get_url: url=https://github.com/{{github}}.keys dest=/tmp/new_user.keys
-    delegate_to: 127.0.0.1
-  - name: Add an authorized key to the new user
-    authorized_key: user={{username}} key="{{ lookup('file', '/tmp/new_user.keys') }}"
-  - name: Add an authorized key to the deploy
-    authorized_key: user=deploy key="{{ lookup('file', '/tmp/new_user.keys') }}"
+  - name: Create the .ssh directory
+    file: path=/home/deploy/.ssh state=directory owner=deploy mode=0700
+  - name: Copy the authorized keys file
+    copy: src=files/common/ssh/authorized_keys dest=/home/deploy/.ssh/authorized_keys mode=0600 owner=deploy
   - name: Set NOPASSWD for deploy on sudo
     lineinfile: >
       dest=/etc/sudoers
@@ -41,4 +32,4 @@
   - name: Set the machine hostname
     hostname: name="{{inventory_hostname}}"
   - name: Install and enable the EPEL repo
-    command: rpm -Uvh --replacepkgs http://mirrors.rit.edu/epel/beta/7/x86_64/epel-release-7-1.noarch.rpm
+    command: rpm -Uvh --replacepkgs https://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-2.noarch.rpm
