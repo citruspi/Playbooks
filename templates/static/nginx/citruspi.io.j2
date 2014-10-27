@@ -1,0 +1,60 @@
+server {
+
+    listen 80;
+    server_name citruspi.io;
+
+    location / {
+
+        root        /srv/citruspi.io/www/_site;
+        index       index.html;
+        error_page   404        /404;
+        add_header  X-Endpoint "{{inventory_hostname}}";
+
+    }
+
+}
+
+server {
+
+    listen  80;
+    server_name  reactirc.citruspi.io;
+
+    location / {
+
+        root    /srv/citruspi.io/reactirc;
+        index   index.html;
+        add_header  X-Endpoint "{{inventory_hostname}}";
+
+    }
+
+
+}
+
+server {
+
+    listen 80;
+    server_name spotify-notifications.citruspi.io;
+
+    location / {
+
+        root       /srv/citruspi.io/spotify-notifications;
+        index      index.html;
+        add_header X-Endpoint "{{inventory_hostname}}";
+
+    }
+
+}
+
+server {
+
+    listen      80;
+    server_name hfossblog.citruspi.io;
+
+    location / {
+
+        root        /srv/citruspi.io/hfossblog;
+        autoindex   on;
+        add_header  X-Endpoint "{{inventory_hostname}}";
+    }
+
+}

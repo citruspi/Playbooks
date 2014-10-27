@@ -1,0 +1,15 @@
+server {
+
+    listen      80;
+    server_name rhokthehood.com;
+
+    location / {
+
+        root        /srv/rhokthehood.com/www;
+        index       index.html;
+        error_page  404         /404;
+        add_header  X-Endpoint "{{inventory_hostname}}";
+
+    }
+
+}

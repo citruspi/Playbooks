@@ -8,3 +8,7 @@ gh_projects:
   - { domain: 'citruspi.io', subdomain: 'reactirc', owner: 'citruspi', repo: 'reactirc.citruspi.io', branch: 'master' }
 s3_projects:
   - { domain: 'rhokthehood.com', subdomain: 'www', bucket: 'rhokthehoodbuilds', branch: 'master'}
+nginx_confs:
+  - { conf: 'citruspi.io' }
+  - { conf: 'mihirsingh.com' }
+  - { conf: 'rhokthehood.com' }
