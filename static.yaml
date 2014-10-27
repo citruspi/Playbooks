@@ -1,52 +1,67 @@
 ---
 - hosts: static
   vars:
-    projects:
-      - { domain: 'mihirsingh.com', subdomain: 'www', repo: 'https://github.com/citruspi/mihirsingh.com.git', branch: 'master' }
-      - { domain: 'mihirsingh.com', subdomain: 'gpg', repo: 'https://github.com/citruspi/gpg.git', branch: 'master' }
-      - { domain: 'mihirsingh.com', subdomain: 'resume', repo: 'https://github.com/citruspi/resume.git', branch: 'master' }
-      - { domain: 'citruspi.io', subdomain: 'spotify-notifications', repo: 'https://github.com/citruspi/spotify-notifications.citruspi.io.git', branch: 'master' }
-      - { domain: 'citruspi.io', subdomain: 'www', repo: 'https://github.com/citruspi/citruspi.io.git', branch: 'built' }
-      - { domain: 'citruspi.io', subdomain: 'hfossblog', repo: 'https://github.com/citruspi/hfoss-blog.git', branch: 'master' }
-      - { domain: 'citruspi.io', subdomain: 'reactirc', repo: 'https://github.com/citruspi/reactirc.citruspi.io.git', branch: 'master' }
-    projects20:
-      - { domain: 'rhokthehood.com', subdomain: 'www', bucket: 'rhokthehoodbuilds'}
+    gh_projects:
+      - { domain: 'mihirsingh.com', subdomain: 'www', owner: 'citruspi', 'repo': 'mihirsingh.com', branch: 'master'}
+      - { domain: 'mihirsingh.com', subdomain: 'gpg', owner: 'citruspi', 'repo': 'gpg.mihirsingh.com', branch: 'master'}
+      - { domain: 'mihirsingh.com', subdomain: 'resume', owner: 'citruspi', 'repo': 'resume', branch: 'master'}
+      - { domain: 'citruspi.io', subdomain: 'spotify-notifications', owner: 'citruspi', repo: 'spotify-notifications.citruspi.io', branch: 'master' }
+      - { domain: 'citruspi.io', subdomain: 'www', owner: 'citruspi', repo: 'citruspi.io', branch: 'master' }
+      - { domain: 'citruspi.io', subdomain: 'hfossblog', owner: 'citruspi', repo: 'hfoss-blog', branch: 'master' }
+      - { domain: 'citruspi.io', subdomain: 'reactirc', owner: 'citruspi', repo: 'reactirc.citruspi.io', branch: 'master' }
+    s3_projects:
+      - { domain: 'rhokthehood.com', subdomain: 'www', bucket: 'rhokthehoodbuilds', branch: 'master'}
   user: citruspi
   roles:
   - nginx
-  - git
   tasks:
   - name: Set directory owner
     shell: 'chown {{ansible_ssh_user}}:root /srv;'
     sudo: True
-  - name: Create project directory
-    file: state=directory path=/srv/{{item.domain}}/{{item.subdomain}}
-    with_items: projects
-  - name: Git clone project
-    git: repo={{item.repo}} dest=/srv/{{item.domain}}/{{item.subdomain}} version={{item.branch}}
-    with_items: projects
-  - name: Build projects
-    shell: 'cd /srv/{{item.domain}}/{{item.subdomain}}; make'
-    with_items: projects
-    when: item.make is defined
-  - name: Download project builds
-    get_url: url=https://s3.amazonaws.com/{{item.bucket}}/master-latest.zip dest=/tmp/{{item.domain}}-{{item.subdomain}}-latest.zip
-    with_items: projects20
-  - name: Create directories for project builds
-    file: path=/tmp/{{item.domain}}-{{item.subdomain}}-latest state=directory
-    with_items: projects20
-  - name: Unarchive project builds
-    unarchive: src=/tmp/{{item.domain}}-{{item.subdomain}}-latest.zip dest=/tmp/{{item.domain}}-{{item.subdomain}}-latest copy=no
-    with_items: projects20
-  - name: Remove previous project build
+  # GitHub Projects
+  - name: Download GitHub projects
+    get_url: url=https://github.com/{{item.owner}}/{{item.repo}}/archive/{{item.branch}}.zip dest=/tmp/{{item.domain}}-{{item.subdomain}}-{{item.branch}}.zip
+    with_items: gh_projects
+  - name: Create temporary directories for GitHub project builds
+    file: path=/tmp/{{item.domain}}-{{item.subdomain}}-{{item.branch}} state=directory
+    with_items: gh_projects
+  - name: Create permanent (domain-level) directory for GitHub project builds
+    file: path=/srv/{{item.domain}} state=directory
+    with_items: gh_projects
+  - name: Unarchive GitHub project builds
+    unarchive: src=/tmp/{{item.domain}}-{{item.subdomain}}-{{item.branch}}.zip dest=/tmp/{{item.domain}}-{{item.subdomain}}-{{item.branch}} copy=no
+    with_items: gh_projects
+  - name: Remove legacy GitHub project builds
     file: path=/srv/{{item.domain}}/{{item.subdomain}} state=absent
-    with_items: projects20
-  - name: Copy in latest project builds
-    command: mv /tmp/{{item.domain}}-{{item.subdomain}}-latest /srv/{{item.domain}}/{{item.subdomain}}
-    with_items: projects20
-  - name: Cleanup project build archives
-    file: path=/tmp/{{item.domain}}-{{item.subdomain}}-latest.zip state=absent
-    with_items: projects20
+    with_items: gh_projects
+  - name: Place fresh GitHub project builds
+    command: mv /tmp/{{item.domain}}-{{item.subdomain}}-{{item.branch}}/{{item.repo}}-{{item.branch}} /srv/{{item.domain}}/{{item.subdomain}}
+    with_items: gh_projects
+  - name: Cleanup GitHub project build archives
+    file: path=/tmp/{{item.domain}}-{{item.subdomain}}-{{item.branch}}.zip state=absent
+    with_items: gh_projects
+  # Jenkins-built, S3-managed Projects
+  - name: Download S3 project builds
+    get_url: url=https://s3.amazonaws.com/{{item.bucket}}/{{item.branch}}-latest.zip dest=/tmp/{{item.domain}}-{{item.subdomain}}-{{item.branch}}.zip
+    with_items: s3_projects
+  - name: Create temporary directories for S3 project builds
+    file: path=/tmp/{{item.domain}}-{{item.subdomain}}-{{item.branch}} state=directory
+    with_items: s3_projects
+  - name: Create permanent (domain-level) directory for S3 project builds
+    file: path=/srv/{{item.domain}} state=directory
+    with_items: s3_projects
+  - name: Unarchive S3 project builds
+    unarchive: src=/tmp/{{item.domain}}-{{item.subdomain}}-{{item.branch}}.zip dest=/tmp/{{item.domain}}-{{item.subdomain}}-{{item.branch}} copy=no
+    with_items: s3_projects
+  - name: Remove legacy S3 project builds
+    file: path=/srv/{{item.domain}}/{{item.subdomain}} state=absent
+    with_items: s3_projects
+  - name: Place fresh S3 project builds
+    command: mv /tmp/{{item.domain}}-{{item.subdomain}}-{{item.branch}} /srv/{{item.domain}}/{{item.subdomain}}
+    with_items: s3_projects
+  - name: Cleanup S3 project build archives
+    file: path=/tmp/{{item.domain}}-{{item.subdomain}}-{{item.branch}}.zip state=absent
+    with_items: s3_projects
   - name: Update Nginx conf
     template: src=templates/static/nginx.j2 dest=/etc/nginx/conf.d/site.conf
     sudo: True
