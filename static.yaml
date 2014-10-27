@@ -2,7 +2,7 @@
 - hosts: static
   vars_files:
     - variables/static.yaml
-  user: citruspi
+  user: deploy
   roles:
   - nginx
   tasks:
