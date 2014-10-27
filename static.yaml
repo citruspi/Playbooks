@@ -6,8 +6,8 @@
   roles:
   - nginx
   tasks:
-  - name: Set directory owner
-    shell: 'chown {{ansible_ssh_user}}:root /srv;'
+  - name: Confirmed static assets directory
+    file: path=/srv state=directory owner=deploy
     sudo: True
   # GitHub Projects
   - name: Download GitHub projects
