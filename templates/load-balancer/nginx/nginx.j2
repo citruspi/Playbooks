@@ -1,50 +1,6 @@
-# For more information on configuration, see:
-#   * Official English Documentation: http://nginx.org/en/docs/
-#   * Official Russian Documentation: http://nginx.org/ru/docs/
+{% extends "templates/common/nginx/nginx.j2" %}
 
-user              nginx;
-worker_processes  1;
-
-error_log  /var/log/nginx/error.log;
-#error_log  /var/log/nginx/error.log  notice;
-#error_log  /var/log/nginx/error.log  info;
-
-pid        /var/run/nginx.pid;
-
-
-events {
-    worker_connections  1024;
-}
-
-
-http {
-    include       /etc/nginx/mime.types;
-    default_type  application/octet-stream;
-
-    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-                      '$status $body_bytes_sent "$http_referer" '
-                      '"$http_user_agent" "$http_x_forwarded_for"';
-
-    access_log  /var/log/nginx/access.log  main;
-
-    sendfile        on;
-
-    keepalive_timeout  65;
-
-    server_tokens               off;
-
-    ssl_session_cache           shared:SSL:50m;
-    ssl_session_timeout         5m;
-
-    ssl_dhparam                 /etc/nginx/ssl/dhparam.pem;
-
-    ssl_prefer_server_ciphers   on;
-    ssl_protocols               TLSv1 TLSv1.1 TLSv1.2;
-    ssl_ciphers                 "EECDH+ECDSA+AESGCM EECDH+aRSA+AESGCM EECDH+ECDSA+SHA384 EECDH+ECDSA+SHA256 EECDH+aRSA+SHA384 EECDH+aRSA+SHA256 EECDH+aRSA+RC4 EECDH EDH+aRSA RC4 !aNULL !eNULL !LOW !3DES !MD5 !EXP !PSK !SRP !DSS !RC4";
-
-    add_header 			X-Frame-Options SAMEORIGIN;
-    add_header 			X-Content-Type-Options nosniff;
-    add_header 			X-XSS-Protection "1; mode=block";
+{% block specific %}
 
     upstream static.citruspi {
         {% for host in groups['static'] %}
@@ -58,6 +14,4 @@ http {
         {% endfor %}
     }
 
-    include /etc/nginx/conf.d/*.conf;
-
-}
+{% endblock %}
