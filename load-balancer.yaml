@@ -1,30 +1,20 @@
 ---
 - hosts: load-balancer
-  vars:
-    nginx_conf: 'nginx'
-    site_confs:
-      - { conf: 'citruspi.io' }
-      - { conf: 'mihirsingh.com' }
-      - { conf: 'rhokthehood.com' }
-    certs:
-      - com.rhokthehood.www
-      - io.citruspi.www
+  vars_files:
+      - variables/load-balancer.yaml
   user: citruspi
   roles:
   - nginx
   - ssl
   tasks:
-  - name: Create project directory
-    file: state=directory path=/etc/nginx/ssl
-    sudo: True
   - name: Update Nginx config
     template: src=templates/load-balancer/nginx/nginx.j2 dest=/etc/nginx/nginx.conf
     sudo: True
     notify:
       - reload nginx
   - name: Update Nginx Site configs
-    template: src=templates/load-balancer/nginx/{{item.conf}}.j2 dest=/etc/nginx/conf.d/{{item.conf}}.conf
-    with_items: site_confs
+    template: src=templates/load-balancer/nginx/{{item}}.j2 dest=/etc/nginx/conf.d/{{item}}.conf
+    with_items: confs
     sudo: True
     notify:
       - reload nginx

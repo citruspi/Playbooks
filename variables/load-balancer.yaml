@@ -1,0 +1,7 @@
+confs:
+  - citruspi.io
+  - mihirsingh.com
+  - rhokthehood.com
+certs:
+  - com.rhokthehood.www
+  - io.citruspi.www
