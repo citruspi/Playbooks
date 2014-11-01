@@ -3,6 +3,8 @@ server {
     listen 80;
     server_name mihirsingh.com;
 
+    gzip_vary on;
+
     location / {
 
         root       /srv/mihirsingh.com/www;
