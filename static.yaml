@@ -53,13 +53,14 @@
   - name: Cleanup S3 project build archives
     file: path=/tmp/{{item.domain}}-{{item.subdomain}}-{{item.branch}}.zip state=absent
     with_items: s3_projects
-  - name: Update nginx confs
+  - name: Update nginx conf
+    template: src=templates/static/nginx/nginx.j2 dest=/etc/nginx/nginx.conf
+    sudo: True
+    notify:
+      - reload nginx
+  - name: Update nginx site confs
     template: src=templates/static/nginx/{{item.conf}}.j2 dest=/etc/nginx/conf.d/{{item.conf}}.conf
     with_items: nginx_confs
     sudo: True
     notify:
       - reload nginx
-  handlers:
-  - name: reload nginx
-    command: service nginx reload
-    sudo: True
