@@ -1,0 +1,21 @@
+---
+- name: Confirm the existence of the SSL directory
+  file: path=/etc/nginx/ssl state=directory mode=700 owner=root group=root
+  sudo: True
+- name: Copy the SSL certificates
+  copy: src=files/ssl/{{item}}.crt dest=/etc/nginx/ssl/{{item}}.crt mode=600 owner=root group=root
+  with_items: certs
+  sudo: True
+  notify:
+    - reload nginx
+- name: Copy the SSL keys
+  copy: src=files/ssl/{{item}}.key dest=/etc/nginx/ssl/{{item}}.key mode=600 owner=root group=root
+  with_items: certs
+  sudo: True
+  notify:
+    - reload nginx
+- name: Copy the dhparam key
+  copy: src=files/ssl/dhparam.pem dest=/etc/nginx/ssl/dhparam.pem mode=600 owner=root group=root
+  sudo: True
+  notify:
+    - reload nginx

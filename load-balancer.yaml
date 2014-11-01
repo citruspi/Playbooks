@@ -6,33 +6,17 @@
       - { conf: 'citruspi.io' }
       - { conf: 'mihirsingh.com' }
       - { conf: 'rhokthehood.com' }
-    ssl_certs:
-      - { cert: 'io.citruspi.www' }
-      - { cert: 'com.rhokthehood.www' }
+    certs:
+      - com.rhokthehood.www
+      - io.citruspi.www
   user: citruspi
   roles:
   - nginx
+  - ssl
   tasks:
   - name: Create project directory
     file: state=directory path=/etc/nginx/ssl
     sudo: True
-  - name: Copy SSL certs
-    copy: src=files/load-balancer/ssl/{{item.cert}}.crt dest=/etc/nginx/ssl/{{item.cert}}.crt mode=644
-    with_items: ssl_certs
-    sudo: True
-    notify:
-      - reload nginx
-  - name: Copy SSL keys
-    copy: src=files/load-balancer/ssl/{{item.cert}}.key dest=/etc/nginx/ssl/{{item.cert}}.key mode=644
-    with_items: ssl_certs
-    sudo: True
-    notify:
-      - reload nginx
-  - name: Copy Diffie-Hellman parameter
-    copy: src=files/load-balancer/ssl/dhparam.pem dest=/etc/nginx/ssl/dhparam.pem mode=644
-    sudo: True
-    notify:
-      - reload nginx
   - name: Update Nginx config
     template: src=templates/load-balancer/nginx/nginx.j2 dest=/etc/nginx/nginx.conf
     sudo: True
@@ -44,7 +28,3 @@
     sudo: True
     notify:
       - reload nginx
-  handlers:
-  - name: reload nginx
-    command: service nginx reload
-    sudo: True
