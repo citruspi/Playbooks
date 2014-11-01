@@ -5,7 +5,7 @@ server {
 
     location / {
 
-        root        /srv/citruspi.io/www/_site;
+        root        /srv/citruspi.io/www;
         index       index.html;
         error_page   404        /404;
         add_header  X-Endpoint "{{inventory_hostname}}";
