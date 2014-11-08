@@ -4,6 +4,7 @@
     - variables/static.yaml
   user: deploy
   roles:
+  - unzip
   - nginx
   tasks:
   - name: Confirmed static assets directory
