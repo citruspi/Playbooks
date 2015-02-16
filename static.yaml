@@ -10,28 +10,6 @@
   - name: Confirmed static assets directory
     file: path=/srv state=directory owner=deploy
     sudo: True
-  # GitHub Projects
-  - name: Download GitHub projects
-    get_url: url=https://github.com/{{item.owner}}/{{item.repo}}/archive/{{item.branch}}.zip dest=/tmp/{{item.domain}}-{{item.subdomain}}-{{item.branch}}.zip
-    with_items: gh_projects
-  - name: Create temporary directories for GitHub project builds
-    file: path=/tmp/{{item.domain}}-{{item.subdomain}}-{{item.branch}} state=directory
-    with_items: gh_projects
-  - name: Create permanent (domain-level) directory for GitHub project builds
-    file: path=/srv/{{item.domain}} state=directory
-    with_items: gh_projects
-  - name: Unarchive GitHub project builds
-    unarchive: src=/tmp/{{item.domain}}-{{item.subdomain}}-{{item.branch}}.zip dest=/tmp/{{item.domain}}-{{item.subdomain}}-{{item.branch}} copy=no
-    with_items: gh_projects
-  - name: Remove legacy GitHub project builds
-    file: path=/srv/{{item.domain}}/{{item.subdomain}} state=absent
-    with_items: gh_projects
-  - name: Place fresh GitHub project builds
-    command: mv /tmp/{{item.domain}}-{{item.subdomain}}-{{item.branch}}/{{item.repo}}-{{item.branch}} /srv/{{item.domain}}/{{item.subdomain}}
-    with_items: gh_projects
-  - name: Cleanup GitHub project build archives
-    file: path=/tmp/{{item.domain}}-{{item.subdomain}}-{{item.branch}}.zip state=absent
-    with_items: gh_projects
   # Jenkins-built, S3-managed Projects
   - name: Download S3 project builds
     get_url: url=https://s3.amazonaws.com/{{item.bucket}}/{{item.branch}}.zip dest=/tmp/{{item.domain}}-{{item.subdomain}}-{{item.branch}}.zip
