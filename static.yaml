@@ -34,7 +34,7 @@
     with_items: gh_projects
   # Jenkins-built, S3-managed Projects
   - name: Download S3 project builds
-    get_url: url=https://s3.amazonaws.com/{{item.bucket}}/{{item.branch}}-latest.zip dest=/tmp/{{item.domain}}-{{item.subdomain}}-{{item.branch}}.zip
+    get_url: url=https://s3.amazonaws.com/{{item.bucket}}/{{item.branch}}.zip dest=/tmp/{{item.domain}}-{{item.subdomain}}-{{item.branch}}.zip
     with_items: s3_projects
   - name: Create temporary directories for S3 project builds
     file: path=/tmp/{{item.domain}}-{{item.subdomain}}-{{item.branch}} state=directory
