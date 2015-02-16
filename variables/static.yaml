@@ -1,13 +1,13 @@
 gh_projects:
-  - { domain: 'mihirsingh.com', subdomain: 'www', owner: 'citruspi', 'repo': 'mihirsingh.com', branch: 'master'}
   - { domain: 'mihirsingh.com', subdomain: 'gpg', owner: 'citruspi', 'repo': 'gpg.mihirsingh.com', branch: 'master'}
   - { domain: 'mihirsingh.com', subdomain: 'resume', owner: 'citruspi', 'repo': 'resume', branch: 'master'}
   - { domain: 'citruspi.io', subdomain: 'spotify-notifications', owner: 'citruspi', repo: 'spotify-notifications.citruspi.io', branch: 'master' }
   - { domain: 'citruspi.io', subdomain: 'hfossblog', owner: 'citruspi', repo: 'hfoss-blog', branch: 'master' }
   - { domain: 'citruspi.io', subdomain: 'reactirc', owner: 'citruspi', repo: 'reactirc.citruspi.io', branch: 'master' }
 s3_projects:
-  - { domain: 'rhokthehood.com', subdomain: 'www', bucket: 'rhokthehoodbuilds', branch: 'master'}
-  - { domain: 'citruspi.io', subdomain: 'www', bucket: 'citruspidotiobuilds', branch: 'master' }
+  - { domain: 'mihirsingh.com', subdomain: 'www', bucket: 'com.mihirsingh.www', branch: 'master'}
+  - { domain: 'rhokthehood.com', subdomain: 'www', bucket: 'com.rhokthehood.www', branch: 'master'}
+  - { domain: 'citruspi.io', subdomain: 'www', bucket: 'io.citruspi.www', branch: 'master' }
 nginx_confs:
   - { conf: 'citruspi.io' }
   - { conf: 'mihirsingh.com' }
