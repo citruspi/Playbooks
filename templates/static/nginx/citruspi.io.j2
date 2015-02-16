@@ -47,20 +47,6 @@ server {
 
 server {
 
-    listen      80;
-    server_name hfossblog.citruspi.io;
-
-    location / {
-
-        root        /srv/citruspi.io/hfossblog;
-        autoindex   on;
-        add_header  X-Endpoint "{{inventory_hostname}}";
-    }
-
-}
-
-server {
-
     listen 80;
     server_name karouseldocs.citruspi.io;
 

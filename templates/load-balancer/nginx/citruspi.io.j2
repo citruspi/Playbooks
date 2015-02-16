@@ -61,20 +61,6 @@ server {
 
 server {
 
-    listen     80;
-    server_name   hfossblog.citruspi.io;
-
-    location / {
-        proxy_pass         http://static.citruspi;
-        proxy_set_header   Host                         $host;
-        proxy_set_header   X-Real-IP                    $remote_addr;
-        proxy_set_header   X-Forwarded-For              $proxy_add_x_forwarded_for;
-    }
-
-}
-
-server {
-
     listen          80;
     server_name     api.wintergarten.citruspi.io;
 
