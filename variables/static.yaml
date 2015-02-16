@@ -1,6 +1,6 @@
 gh_projects:
-  - { domain: 'citruspi.io', subdomain: 'spotify-notifications', owner: 'citruspi', repo: 'spotify-notifications.citruspi.io', branch: 'master' }
 s3_projects:
+  - { domain: 'citruspi.io', subdomain: 'spotify-notifications', bucket: 'io.citruspi.spotify-notifications', branch: 'master' }
   - { domain: 'mihirsingh.com', subdomain: 'resume', bucket: 'com.mihirsingh.resume', branch: 'master' }
   - { domain: 'mihirsingh.com', subdomain: 'gpg', bucket: 'com.mihirsingh.gpg', branch: 'master'}
   - { domain: 'mihirsingh.com', subdomain: 'www', bucket: 'com.mihirsingh.www', branch: 'master'}
