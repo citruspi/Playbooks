@@ -1,0 +1,29 @@
+---
+- name: Download release from S3
+  get_url: url=https://s3.amazonaws.com/{{bucket}}/{{version}}.zip dest=/tmp/wintergarten-{{version}}.zip
+- name: Create temporary directory for release
+  file: path=/tmp/wintergarten-{{version}} state=directory
+- name: Unarchive release
+  unarchive: src=/tmp/wintergarten-{{version}}.zip dest=/tmp/wintergarten-{{version}} copy=no
+- name: Copy the config
+  template: src=templates/apps/wintergarten/wintergarten.conf.j2 dest=/etc/wintergarten.con
+  sudo: True
+- name: Copy the service
+  template: src=templates/apps/wintergarten/systemd.service dest=/usr/lib/systemd/system/wintergarten.service
+  sudo: True
+- name: Stop service
+  service: name=wintergarten state=stopped
+- name: Remove legacy release
+  file: path=/usr/bin/wintergarten state=absent
+  sudo: true
+- name: Place fresh release
+  command: mv /tmp/wintergarten-{{version}}/wintergarten /usr/bin/wintegarten
+  sudo: true
+- name: Start service
+  service: name=wintergarten state=started enabled=yes
+  sudo: True
+- name: Update Nginx Site configs
+  template: src=templates/apps/wintergarten/nginx.conf.j2 dest=/etc/nginx/conf.d/api.wintergarten.citruspi.io.conf
+  sudo: True
+  notify:
+  - reload nginx
