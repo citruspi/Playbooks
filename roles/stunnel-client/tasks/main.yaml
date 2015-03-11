@@ -8,6 +8,9 @@
 - name: Copy service file
   template: src=templates/common/stunnel/stunnel.service dest=/usr/lib/systemd/system/stunnel.service
   sudo: True
+- name: Copy conf file
+  template: src=templates/stunnel/client/stunnel.conf.js dest=/etc/stunnel/stunnel.conf
+  sudo: True
 - name: Start Stunnel
   service: name=stunnel state=started enabled=yes
   sudo: True
