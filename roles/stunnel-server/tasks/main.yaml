@@ -1,0 +1,13 @@
+---
+- name: Install Stunnel
+  yum: name=stunnel state=present
+  sudo: True
+- name: Copy key
+  copy: src=files/common/stunnel/private.pem dest=/etc/stunnel/stunnel.pem mode=640
+  sudo: True
+- name: Copy service file
+  template: src=templates/common/stunnel/stunnel.service dest=/usr/lib/systemd/system/stunnel.service
+  sudo: True
+- name: Start Stunnel
+  service: name=stunnel state=started enabled=yes
+  sudo: True
