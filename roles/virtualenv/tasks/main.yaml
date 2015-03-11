@@ -1,4 +1,0 @@
----
-- name: Install Virtualenv
-  pip: name=virtualenv
-  sudo: True

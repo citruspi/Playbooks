@@ -1,4 +1,0 @@
----
-- name: Install Pip
-  yum: name=python-pip state=present
-  sudo: True
