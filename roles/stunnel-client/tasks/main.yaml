@@ -6,7 +6,7 @@
   copy: src=files/common/stunnel/private.pem dest=/etc/stunnel/stunnel.pem mode=640
   sudo: True
 - name: Copy service file
-  template: src=templates/common/stunnel/stunnel.service dest=/usr/lib/systemd/system/stunnel.service
+  template: src=templates/stunnel/stunnel.service dest=/usr/lib/systemd/system/stunnel.service
   sudo: True
 - name: Copy conf file
   template: src=templates/stunnel/client/stunnel.conf.js dest=/etc/stunnel/stunnel.conf
