@@ -32,4 +32,5 @@
   - name: Set the machine hostname
     hostname: name="{{inventory_hostname}}"
   - name: Install and enable the EPEL repo
-    command: rpm -Uvh --replacepkgs https://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
+    yum: name=epel-release state=present
+    sudo: True
