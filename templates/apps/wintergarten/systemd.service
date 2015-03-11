@@ -1,0 +1,10 @@
+[Unit]
+Description=Wintergarten
+After=syslog.target
+
+[Service]
+ExecStart=/usr/bin/wintergarten
+Type=simple
+
+[Install]
+WantedBy=multi-user.target
