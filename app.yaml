@@ -1,14 +1,7 @@
 ---
 - hosts: app
-  vars:
-    site_confs:
-      - { conf: 'citruspi.io' }
-    app_confs:
-      - { conf: 'wintergarten.conf' }
-    supervisor_confs:
-      - { conf: 'wintergarten' }
-    python_projects:
-      - { domain: 'citruspi.io', subdomain: 'wintergarten-api', repo: 'https://github.com/citruspi/Wintergarten-API.git', branch: 'master' }
+  vars_files:
+  - variables/app.yaml
   user: deploy
   roles:
   - nginx
