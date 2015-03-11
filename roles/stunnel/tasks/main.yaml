@@ -9,5 +9,5 @@
   template: src=templates/common/stunnel/stunnel.service dest=/usr/lib/systemd/system/stunnel.service
   sudo: True
 - name: Start Stunnel
-  service: name=nginx state=started enabled=yes
+  service: name=stunnel state=started enabled=yes
   sudo: True
