@@ -2,6 +2,13 @@
 - name: Install Redis
   yum: name=redis state=present
   sudo: True
+- name: Set Redis Port
+  lineinfile: >
+    dest=/etc/redis.conf
+    regexp="^port"
+    line="port {{redis_port}}"
+    state=present
+  sudo: True
 - name: Start Redis
   service: name=redis state=started enabled=yes
   sudo: True
