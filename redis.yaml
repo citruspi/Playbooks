@@ -1,0 +1,6 @@
+---
+- hosts: redis
+  user: deploy
+  roles:
+  - stunnel-server
+  - redis
