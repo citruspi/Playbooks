@@ -3,7 +3,7 @@ Description=SSL tunnel for network daemons
 After=syslog.target
 
 [Service]
-ExecStart=/usr/bin/stunnel
+ExecStart=/usr/bin/stunnel /etc/stunnel/stunnel.conf
 Type=forking
 
 [Install]
