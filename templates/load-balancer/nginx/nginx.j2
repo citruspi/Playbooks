@@ -8,6 +8,12 @@
         {% endfor %}
     }
 
+    upstream wintergarten.app.citruspi {
+        {% for host in groups['wintergarten'] %}
+        server {{ hostvars[host] }};
+        {% endfor %}
+    }
+
     upstream app.citruspi {
         {% for host in groups['app'] %}
         server {{ hostvars[host]['ansible_ssh_host'] }};
