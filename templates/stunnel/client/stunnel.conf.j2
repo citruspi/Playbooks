@@ -1,8 +1,6 @@
-cert = /etc/stunnel/private.pem
-pid = /var/run/stunnel.pid
+cert = /etc/stunnel/stunnel.pem
 client = yes
+
 [redis]
 accept = 6379
-{% for host in groups['redis'] %}
-connect = {{ hostvars[host]['ansible_ssh_host'] }}:6379
-{% endfor %}
+connect = {{redis_host}}:6379
