@@ -1,0 +1,5 @@
+---
+- hosts: front-end
+  user: {{user}}
+  roles:
+  - front-end
