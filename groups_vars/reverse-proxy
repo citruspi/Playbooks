@@ -1,9 +1,9 @@
 ---
-confs:
+reverse_proxy_nginx_confs:
   - citruspi.io
   - mihirsingh.com
   - rhokthehood.com
-certs:
+reverse_proxy_ssl_certificates:
   - com.rhokthehood.www
   - io.citruspi.www
   - com.mihirsingh.www

@@ -4,13 +4,13 @@
   sudo: True
 - name: Copy the SSL certificates
   copy: src=files/ssl/{{item}}.crt dest=/etc/nginx/ssl/{{item}}.crt mode=600 owner=root group=root
-  with_items: certs
+  with_items: reverse_proxy_ssl_certificates
   sudo: True
   notify:
     - reload nginx
 - name: Copy the SSL keys
   copy: src=files/ssl/{{item}}.key dest=/etc/nginx/ssl/{{item}}.key mode=600 owner=root group=root
-  with_items: certs
+  with_items: reverse_proxy_ssl_certificates
   sudo: True
   notify:
     - reload nginx
@@ -26,7 +26,7 @@
     - reload nginx
 - name: Update Nginx Site configs
   template: src={{item}}.j2 dest=/etc/nginx/conf.d/{{item}}.conf
-  with_items: conf
+  with_items: reverse_proxy_nginx_confs
   sudo: True
   notify:
     - reload nginx
