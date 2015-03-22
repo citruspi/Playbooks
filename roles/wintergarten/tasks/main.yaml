@@ -1,10 +1,10 @@
 ---
 - name: Download release from S3
-  get_url: url=https://s3.amazonaws.com/{{bucket}}/{{version}}.zip dest=/tmp/wintergarten-{{version}}.zip
+  get_url: url=https://s3.amazonaws.com/{{wintergarten_bucket}}/{{wintergarten_version}}.zip dest=/tmp/wintergarten-{{wintergarten_version}}.zip
 - name: Create temporary directory for release
-  file: path=/tmp/wintergarten-{{version}} state=directory
+  file: path=/tmp/wintergarten-{{wintergarten_version}} state=directory
 - name: Unarchive release
-  unarchive: src=/tmp/wintergarten-{{version}}.zip dest=/tmp/wintergarten-{{version}} copy=no
+  unarchive: src=/tmp/wintergarten-{{wintergarten_version}}.zip dest=/tmp/wintergarten-{{wintergarten_version}} copy=no
 - name: Copy the config
   template: src=wintergarten.conf.j2 dest=/etc/wintergarten.conf
   sudo: True
@@ -17,7 +17,7 @@
   file: path=/usr/bin/wintergarten state=absent
   sudo: true
 - name: Place fresh release
-  command: mv /tmp/wintergarten-{{version}}/wintergarten /usr/bin/wintergarten
+  command: mv /tmp/wintergarten-{{wintergarten_version}}/wintergarten /usr/bin/wintergarten
   sudo: true
 - name: Start service
   service: name=wintergarten state=started enabled=yes
