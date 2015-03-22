@@ -1,6 +1,6 @@
 ---
 - name: Confirmed static assets directory
-  file: path=/srv state=directory owner=deploy
+  file: path=/srv state=directory owner={{user}}
   sudo: True
 - name: Download S3 project builds
   get_url: url=https://s3.amazonaws.com/{{item.bucket}}/{{item.branch}}.zip dest=/tmp/{{item.domain}}-{{item.subdomain}}-{{item.branch}}.zip
