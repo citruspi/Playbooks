@@ -1,6 +1,6 @@
 ---
 - hosts: front-end
-  user: {{user}}
+  user: "{{user}}"
   roles:
   - base
   - front-end

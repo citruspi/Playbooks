@@ -1,6 +1,6 @@
 ---
 - hosts: reverse-proxy
-  user: {{user}}
+  user: "{{user}}"
   roles:
   - base
   - reverse-proxy

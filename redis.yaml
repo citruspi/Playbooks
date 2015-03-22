@@ -1,6 +1,6 @@
 ---
 - hosts: redis
-  user: {{user}}
+  user: "{{user}}"
   roles:
   - base
   - redis
