@@ -2,4 +2,5 @@
 - hosts: redis
   user: {{user}}
   roles:
+  - base
   - redis

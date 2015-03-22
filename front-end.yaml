@@ -2,4 +2,5 @@
 - hosts: front-end
   user: {{user}}
   roles:
+  - base
   - front-end
