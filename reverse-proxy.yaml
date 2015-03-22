@@ -3,4 +3,5 @@
   user: "{{user}}"
   roles:
   - base
+  - newrelic
   - reverse-proxy
