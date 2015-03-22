@@ -1,57 +1,43 @@
 server {
-
-    listen 80;
+    listen      80;
     server_name citruspi.io;
 
     location / {
-
         root        /srv/citruspi.io/www;
         index       index.html;
-        error_page   404        /404;
+        error_page  404        /404;
         add_header  X-Endpoint "{{inventory_hostname}}";
-
     }
-
 }
 
 server {
-
-    listen  80;
-    server_name  reactirc.citruspi.io;
+    listen      80;
+    server_name reactirc.citruspi.io;
 
     location / {
-
-        root    /srv/citruspi.io/reactirc;
-        index   index.html;
+        root        /srv/citruspi.io/reactirc;
+        index       index.html;
         add_header  X-Endpoint "{{inventory_hostname}}";
-
     }
-
-
 }
 
 server {
-
     listen 80;
     server_name spotify-notifications.citruspi.io;
 
     location / {
-
         root       /srv/citruspi.io/spotify-notifications;
         index      index.html;
         add_header X-Endpoint "{{inventory_hostname}}";
-
     }
-
 }
 
 server {
-
     listen 80;
     server_name karouseldocs.citruspi.io;
 
     location / {
-        root /srv/citruspi.io/karouseldocs;
-        add_header X-Endpoint "{{inventory_hostname}}";
+        root        /srv/citruspi.io/karouseldocs;
+        add_header  X-Endpoint "{{inventory_hostname}}";
     }
 }

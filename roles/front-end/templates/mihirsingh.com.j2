@@ -1,48 +1,37 @@
 server {
-
-    listen 80;
+    listen      80;
     server_name mihirsingh.com;
 
     gzip_vary on;
 
     location / {
-
         root       /srv/mihirsingh.com/www;
         index      index.html;
         add_header X-Endpoint "{{inventory_hostname}}";
 
     }
-
 }
 
 
 server {
-
     listen       80;
     server_name  resume.mihirsingh.com;
 
     location / {
-
         root       /srv/mihirsingh.com/resume;
         index      resume.html;
         add_header X-Endpoint "{{inventory_hostname}}";
-
     }
-
 }
 
 server {
-
     listen       80;
     server_name  gpg.mihirsingh.com;
     add_header   Content-Type text/plain;
 
     location / {
-
         root       /srv/mihirsingh.com/gpg;
         index      citruspi.key;
         add_header X-Endpoint "{{inventory_hostname}}";
-
     }
-
 }
