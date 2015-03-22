@@ -6,7 +6,7 @@
 - name: Unarchive release
   unarchive: src=/tmp/wintergarten-{{version}}.zip dest=/tmp/wintergarten-{{version}} copy=no
 - name: Copy the config
-  template: src=templates/apps/wintergarten/wintergarten.conf.j2 dest=/etc/wintergarten.con
+  template: src=wintergarten.conf.j2 dest=/etc/wintergarten.con
   sudo: True
 - name: Copy the service
   copy: src=systemd.service dest=/usr/lib/systemd/system/wintergarten.service
@@ -23,7 +23,7 @@
   service: name=wintergarten state=started enabled=yes
   sudo: True
 - name: Update Nginx Site configs
-  template: src=templates/apps/wintergarten/nginx.conf.j2 dest=/etc/nginx/conf.d/api.wintergarten.citruspi.io.conf
+  template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/api.wintergarten.citruspi.io.conf
   sudo: True
   notify:
   - reload nginx
