@@ -1,0 +1,20 @@
+---
+- name: Disable SSH password login
+  lineinfile: >
+    dest=/etc/ssh/sshd_config
+    regexp="^PasswordAuthentication"
+    line="PasswordAuthentication no"
+    state=present
+- name: Disable SSH root login
+  lineinfile: >
+    dest=/etc/ssh/sshd_config
+    regexp="^PermitRootLogin"
+    line="PermitRootLogin no"
+    state=present
+- name: Restart the SSH daemon
+  service: name=sshd state=restarted
+- name: Set the machine hostname
+  hostname: name="{{inventory_hostname}}"
+- name: Install and enable the EPEL repo
+  yum: name=epel-release state=present
+  sudo: True
