@@ -1,0 +1,11 @@
+---
+- shell: rpm -Uvh http://download.newrelic.com/pub/newrelic/el5/i386/newrelic-repo-5-3.noarch.rpm
+  sudo: True
+- yum: name=newrelic-sysmond state=present
+  sudo: True
+- service: name=newrelic-sysmond enabled=yes
+  sudo: True
+- template: src=newrelic-sysmond.conf.j2 dest=/etc/newrelic/nrsysmond.cfg
+  sudo: True
+  notify:
+  - restart newrelic

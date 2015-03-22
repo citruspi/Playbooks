@@ -1,0 +1,4 @@
+---
+- name: restart newrelic
+  command: service newrelic-sysmond restart
+  sudo: True
