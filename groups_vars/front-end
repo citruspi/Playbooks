@@ -1,0 +1,13 @@
+---
+s3_projects:
+  - { domain: 'citruspi.io', subdomain: 'spotify-notifications', bucket: 'io.citruspi.spotify-notifications', branch: 'master' }
+  - { domain: 'mihirsingh.com', subdomain: 'resume', bucket: 'com.mihirsingh.resume', branch: 'master' }
+  - { domain: 'mihirsingh.com', subdomain: 'gpg', bucket: 'com.mihirsingh.gpg', branch: 'master'}
+  - { domain: 'mihirsingh.com', subdomain: 'www', bucket: 'com.mihirsingh.www', branch: 'master'}
+  - { domain: 'rhokthehood.com', subdomain: 'www', bucket: 'com.rhokthehood.www', branch: 'master'}
+  - { domain: 'citruspi.io', subdomain: 'www', bucket: 'io.citruspi.www', branch: 'master' }
+  - { domain: 'citruspi.io', subdomain: 'reactirc', bucket: 'io.citruspi.reactirc', branch: 'master' }
+nginx_confs:
+  - { conf: 'citruspi.io' }
+  - { conf: 'mihirsingh.com' }
+  - { conf: 'rhokthehood.com' }
