@@ -22,8 +22,3 @@
 - name: Start service
   service: name=wintergarten state=started enabled=yes
   sudo: True
-- name: Update Nginx Site configs
-  template: src=nginx.conf.j2 dest=/etc/nginx/conf.d/api.wintergarten.citruspi.io.conf
-  sudo: True
-  notify:
-  - reload nginx
