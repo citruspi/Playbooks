@@ -18,3 +18,7 @@
 - name: Install and enable the EPEL repo
   yum: name=epel-release state=present
   sudo: True
+- name: Install unzip
+  yum: name=unzip state=present
+  sudo: True
+  
