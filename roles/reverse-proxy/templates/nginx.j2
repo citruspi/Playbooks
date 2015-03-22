@@ -2,21 +2,15 @@
 
 {% block specific %}
 
-    upstream static.citruspi {
-        {% for host in groups['static'] %}
-        server {{ hostvars[host]['ansible_ssh_host'] }};
+    upstream front-end.marlinspike {
+        {% for host in groups['front-end'] %}
+        server {{ hostvars[host]['inventory_hostname'] }};
         {% endfor %}
     }
 
-    upstream wintergarten.app.citruspi {
+    upstream wintergarten.marlinspike {
         {% for host in groups['wintergarten'] %}
-        server {{ hostvars[host] }};
-        {% endfor %}
-    }
-
-    upstream app.citruspi {
-        {% for host in groups['app'] %}
-        server {{ hostvars[host]['ansible_ssh_host'] }};
+        server {{ hostvars[host]['inventory_hostname'] }};
         {% endfor %}
     }
 
