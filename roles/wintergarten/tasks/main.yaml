@@ -6,7 +6,7 @@
 - name: Unarchive release
   unarchive: src=/tmp/wintergarten-{{version}}.zip dest=/tmp/wintergarten-{{version}} copy=no
 - name: Copy the config
-  template: src=wintergarten.conf.j2 dest=/etc/wintergarten.con
+  template: src=wintergarten.conf.j2 dest=/etc/wintergarten.conf
   sudo: True
 - name: Copy the service
   copy: src=systemd.service dest=/usr/lib/systemd/system/wintergarten.service
@@ -17,7 +17,7 @@
   file: path=/usr/bin/wintergarten state=absent
   sudo: true
 - name: Place fresh release
-  command: mv /tmp/wintergarten-{{version}}/wintergarten /usr/bin/wintegarten
+  command: mv /tmp/wintergarten-{{version}}/wintergarten /usr/bin/wintergarten
   sudo: true
 - name: Start service
   service: name=wintergarten state=started enabled=yes
