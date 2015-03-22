@@ -1,0 +1,12 @@
+---
+- name: Update Nginx config
+  template: src=nginx.j2 dest=/etc/nginx/nginx.conf
+  sudo: True
+  notify:
+    - reload nginx
+- name: Update Nginx Site configs
+  template: src={{item}}.j2 dest=/etc/nginx/conf.d/{{item}}.conf
+  with_items: conf
+  sudo: True
+  notify:
+    - reload nginx
