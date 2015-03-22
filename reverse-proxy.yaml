@@ -1,0 +1,6 @@
+---
+- hosts: reverse-proxy
+  user: {{user}}
+  roles:
+  - ssl-termination
+  - reverse-proxy
