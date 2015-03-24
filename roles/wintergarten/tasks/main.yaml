@@ -13,6 +13,7 @@
   sudo: True
 - name: Stop service
   service: name=wintergarten state=stopped
+  sudo: True
 - name: Remove legacy release
   file: path=/usr/bin/wintergarten state=absent
   sudo: true
