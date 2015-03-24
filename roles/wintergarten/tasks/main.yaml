@@ -9,7 +9,7 @@
   template: src=wintergarten.conf.j2 dest=/etc/wintergarten.conf
   sudo: True
 - name: Copy the service
-  copy: src=systemd.service dest=/usr/lib/systemd/system/wintergarten.service
+  copy: src=wintergarten.service dest=/usr/lib/systemd/system/wintergarten.service
   sudo: True
 - name: Stop service
   service: name=wintergarten state=stopped
