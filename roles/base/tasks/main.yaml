@@ -18,10 +18,16 @@
   sudo: True
 - name: Set the machine hostname
   hostname: name="{{inventory_hostname}}"
-  sudo: True  
+  sudo: True
 - name: Install and enable the EPEL repo
   yum: name=epel-release state=present
   sudo: True
 - name: Install unzip
   yum: name=unzip state=present
+  sudo: True
+- name: Install htop
+  yum: name=htop state=present
+  sudo: True
+- name: Install vim
+  yum: name=vim state=present
   sudo: True
