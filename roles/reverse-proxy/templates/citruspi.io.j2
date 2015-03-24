@@ -2,12 +2,19 @@ server {
     listen   		80;
     server_name		www.citruspi.io citruspi.io www.citruspi.com citruspi.com;
 
-    return 301 		https://citruspi.io$request_uri;
+    return 301 		https://www.citruspi.io$request_uri;
 }
 
 server {
     listen                  443 ssl;
     server_name             citruspi.io;
+
+    return                  301 https://www.citruspi.io$request_uri;
+}
+
+server {
+    listen                  443 ssl;
+    server_name             www.citruspi.io;
 
     ssl_certificate         /etc/nginx/ssl/io.citruspi.www.crt;
     ssl_certificate_key     /etc/nginx/ssl/io.citruspi.www.key;
