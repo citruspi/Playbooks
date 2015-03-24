@@ -1,6 +1,6 @@
 ---
-- shell: rpm -Uvh http://download.newrelic.com/pub/newrelic/el5/i386/newrelic-repo-5-3.noarch.rpm
-  sudo: True
+- yum: name=http://download.newrelic.com/pub/newrelic/el5/i386/newrelic-repo-5-3.noarch.rpm state=present
+  sudo: True  
 - yum: name=newrelic-sysmond state=present
   sudo: True
 - service: name=newrelic-sysmond enabled=yes
