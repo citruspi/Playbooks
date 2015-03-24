@@ -4,4 +4,4 @@ wintergarten_bucket: releases.wintergarten
 wintergarten_address: 0.0.0.0:5000
 wintergarten_cache_ttl: 3600
 wintergarten_cache_address: redis-01.marlinspike.io:6379
-wintergarten_cache_enabled: true
+wintergarten_cache_enabled: "true"
