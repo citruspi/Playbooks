@@ -10,7 +10,7 @@
 
     upstream wintergarten.marlinspike {
         {% for host in groups['wintergarten'] %}
-        server {{ hostvars[host]['inventory_hostname'] }};
+        server {{ hostvars[host]['inventory_hostname'] }}:5000;
         {% endfor %}
     }
 
