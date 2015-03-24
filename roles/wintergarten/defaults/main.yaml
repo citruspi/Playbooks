@@ -3,5 +3,5 @@ wintergarten_version: 5875691635208e390da0e58557e121ca443cc761
 wintergarten_bucket: releases.wintergarten
 wintergarten_address: 0.0.0.0:5000
 wintergarten_cache_ttl: 3600
-wintergarten_cache_address: 127.0.0.1:6379
+wintergarten_cache_address: redis-01.marlinspike.io:6379
 wintergarten_cache_enabled: true
