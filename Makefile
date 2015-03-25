@@ -1,12 +1,17 @@
-all: app static load
+all: front-end wintergarten reverse-proxy redis
 
-app:
-	ansible-playbook -i hosts.yaml app.yaml
+front-end:
 
-load:
+	ansible-playbook -i hosts.yaml front-end.yaml
 
-	ansible-playbook -i hosts.yaml load-balancer.yaml
+wintergarten:
 
-static:
+	ansible-playbook -i hosts.yaml wintergarten.yaml
 
-	ansible-playbook -i hosts.yaml static.yaml
+reverse-proxy:
+
+	ansible-playbook -i hosts.yaml reverse-proxy.yaml
+
+redis:
+
+	ansible-playbook -i hosts.yaml redis.yaml
