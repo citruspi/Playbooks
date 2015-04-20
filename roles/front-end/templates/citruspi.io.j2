@@ -41,3 +41,12 @@ server {
         add_header  X-Endpoint "{{inventory_hostname}}";
     }
 }
+
+server {
+    listen 80;
+    server_name getzen.citruspi.io;
+
+    location / {
+        root    /srv/citruspi.io/getzen;
+    }
+}

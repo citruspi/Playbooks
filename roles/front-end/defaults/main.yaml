@@ -7,6 +7,7 @@ front_end_projects:
   - { domain: 'rhokthehood.com', subdomain: 'www', bucket: 'com.rhokthehood.www', branch: 'master'}
   - { domain: 'citruspi.io', subdomain: 'www', bucket: 'io.citruspi.www', branch: 'master' }
   - { domain: 'citruspi.io', subdomain: 'reactirc', bucket: 'io.citruspi.reactirc', branch: 'master' }
+  - { domain: 'citruspi.io', subdomain: 'getzen', bucket: 'io.citruspi.getzen', branch: 'master' }
 front_end_nginx_confs:
   - { conf: 'citruspi.io' }
   - { conf: 'mihirsingh.com' }
