@@ -15,3 +15,5 @@ reverse-proxy:
 redis:
 
 	ansible-playbook -i hosts.yaml redis.yaml
+
+.PHONY: front-end wintergarten reverse-proxy redis
