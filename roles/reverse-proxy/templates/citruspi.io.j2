@@ -87,6 +87,10 @@ server {
     listen 80;
     server_name powershell.docset.citruspi.io;
 
+    location / {
+        return 301  https://citruspi.io;
+    }
+
     location /feed/ {
         return 302 https://s3.amazonaws.com/powershell.docset/feed.xml;
     }
