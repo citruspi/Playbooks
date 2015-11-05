@@ -3,10 +3,9 @@ server {
     server_name *.rit.sex rit.sex;
 
     root       /srv/rit.sex/www;
-    error_page 404 /index.html;
-    add_header X-Endpoint "{{inventory_hostname}}";
+    add_header X-Endpoint "front-end-01.marlinspike.io";
 
     location / {
-        return 404;
+        index index.html;
     }
 }
