@@ -1,0 +1,12 @@
+server {
+    listen      80;
+    server_name *.rit.sex rit.sex;
+
+    root       /srv/rit.sex/www;
+    error_page 404 /index.html;
+    add_header X-Endpoint "{{inventory_hostname}}";
+
+    location / {
+        return 404;
+    }
+}
