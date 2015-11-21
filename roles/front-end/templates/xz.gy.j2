@@ -1,0 +1,10 @@
+server {
+    listen      80;
+    server_name *.xz.gy xz.gy;
+
+    location / {
+        root        /srv/xz.gy/www;
+        index       index.html;
+        add_header  X-Endpoint "{{inventory_hostname}}";
+    }
+}

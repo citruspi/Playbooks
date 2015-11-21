@@ -3,6 +3,9 @@ reverse_proxy_nginx_confs:
   - citruspi.io
   - mihirsingh.com
   - rhokthehood.com
+  - xz.gy
+  - rit.sex
+  - voidbowels.com
 reverse_proxy_ssl_certificates:
   - com.rhokthehood.www
   - io.citruspi.www

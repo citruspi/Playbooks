@@ -9,8 +9,12 @@ front_end_projects:
   - { domain: 'citruspi.io', subdomain: 'reactirc', bucket: 'io.citruspi.reactirc', branch: 'master' }
   - { domain: 'citruspi.io', subdomain: 'getzen', bucket: 'io.citruspi.getzen', branch: 'master' }
   - { domain: 'citruspi.io', subdomain: 'beta', bucket: 'io.citruspi.www', branch: 'beta' }
+  - { domain: 'xz.gy', subdomain: 'www', bucket: 'gy.xz.www', branch: 'master' }
+  - { domain: 'sex.rit', subdomain: 'www', bucket: 'sex.rit.www', branch: 'master' }
 
 front_end_nginx_confs:
   - { conf: 'citruspi.io' }
   - { conf: 'mihirsingh.com' }
   - { conf: 'rhokthehood.com' }
+  - { conf: 'xz.gy' }
+  - { conf: 'rit.sex' }
