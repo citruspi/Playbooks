@@ -12,6 +12,18 @@ server {
 
 server {
     listen      80;
+    server_name beta.citruspi.io;
+
+    location / {
+        root        /srv/citruspi.io/beta;
+        index       index.html;
+        error_page  404        /404;
+        add_header  X-Endpoint "{{inventory_hostname}}";
+    }
+}
+
+server {
+    listen      80;
     server_name reactirc.citruspi.io;
 
     location / {
