@@ -8,5 +8,5 @@ reverse_proxy_nginx_confs:
   - voidbowels.com
 reverse_proxy_ssl_certificates:
   - com.rhokthehood.www
-  - io.citruspi.www
+  - io.citruspi.*
   - com.mihirsingh.www

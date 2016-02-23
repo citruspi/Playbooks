@@ -9,8 +9,8 @@ server {
     listen                  443 ssl;
     server_name             citruspi.io;
 
-    ssl_certificate         /etc/nginx/ssl/io.citruspi.www.crt;
-    ssl_certificate_key     /etc/nginx/ssl/io.citruspi.www.key;
+    ssl_certificate         /etc/nginx/ssl/io.citruspi.*.crt;
+    ssl_certificate_key     /etc/nginx/ssl/io.citruspi.*.key;
 
     location / {
         proxy_pass         http://front-end.marlinspike;
