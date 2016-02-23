@@ -33,9 +33,19 @@ server {
 }
 
 server {
-    listen          80;
+    listen   		80;
+    server_name		beta.citruspi.io;
+
+    return 301 		https://beta.citruspi.io$request_uri;
+}
+
+server {
+    listen          443 ssl;
     server_name     beta.citruspi.io;
 
+    ssl_certificate         /etc/nginx/ssl/io.citruspi.*.crt;
+    ssl_certificate_key     /etc/nginx/ssl/io.citruspi.*.key;
+
     location / {
         proxy_pass         http://front-end.marlinspike;
         proxy_set_header   Host                         $host;
@@ -45,9 +55,20 @@ server {
 }
 
 server {
-    listen          80;
+    listen   		80;
+    server_name		reactirc.citruspi.io;
+
+    return 301 		https://reactirc.citruspi.io$request_uri;
+}
+
+
+server {
+    listen          443 ssl;
     server_name     reactirc.citruspi.io;
 
+    ssl_certificate         /etc/nginx/ssl/io.citruspi.*.crt;
+    ssl_certificate_key     /etc/nginx/ssl/io.citruspi.*.key;
+
     location / {
         proxy_pass         http://front-end.marlinspike;
         proxy_set_header   Host                         $host;
@@ -58,8 +79,18 @@ server {
 }
 
 server {
-    listen         80;
+    listen   		80;
+    server_name		spotify-notifications.citruspi.io;
+
+    return 301 		https://spotify-notifications.citruspi.io$request_uri;
+}
+
+server {
+    listen         443 ssl;
     server_name    spotify-notifications.citruspi.io;
+
+    ssl_certificate         /etc/nginx/ssl/io.citruspi.*.crt;
+    ssl_certificate_key     /etc/nginx/ssl/io.citruspi.*.key;
 
     location / {
 	    proxy_pass         http://front-end.marlinspike;
