@@ -1,4 +1,7 @@
 ---
+- name: Enable httpd_can_network_connect in SELinux
+  seboolean: name=httpd_can_network_connect state=yes persistent=yes
+  sudo: True
 - name: Confirm the existence of the SSL directory
   file: path=/etc/nginx/ssl state=directory mode=700 owner=root group=root
   sudo: True
