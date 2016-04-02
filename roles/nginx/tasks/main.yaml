@@ -1,6 +1,15 @@
 ---
+- name: Copy the Nginx RPM package signing key
+  copy: src=nginx_signing.key dest=/etc/nginx/nginx_signing.key mode=600 owner=root group=root
+  sudo: True
+- name: Copy the Nginx RPM repo file
+  copy: src=nginx.repo dest=/etc/yum.repos.d/nginx.repo mode=600 owner=root group=root
+  sudo: True
+- name: Trust the Nginx RPM package
+  command: rpm --import /etc/nginx/nginx_signing.key
+  sudo: True
 - name: Install Nginx
-  yum: name=nginx state=present
+  yum: name=nginx-1.9.12-1.el7.ngx state=present
   sudo: True
 - name: Start Nginx
   service: name=nginx state=started enabled=yes
