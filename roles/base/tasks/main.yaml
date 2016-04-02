@@ -31,3 +31,9 @@
 - name: Install vim
   yum: name=vim state=present
   sudo: True
+- name: Install Development Tools
+  yum: name="@Development Tools" state=present
+  sudo: True
+- name: Install libffi-devel
+  yum: name=libffi-devel state=present
+  sudo: True
