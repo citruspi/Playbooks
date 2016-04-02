@@ -1,0 +1,7 @@
+---
+- name: Install postgresql-contrib
+  yum: name=postgresql-contrib state=present
+  sudo: True
+- name: Install postgresql-devel
+  yum: name=postgresql-devel state=present
+  sudo: True
