@@ -14,4 +14,9 @@
         {% endfor %}
     }
 
+    upstream api.munin {
+        {% for host in groups['munin-api'] %}
+        server {{ hostvars[host]['inventory_hostname'] }}:8080;
+        {% endfor %}
+    }
 {% endblock %}
