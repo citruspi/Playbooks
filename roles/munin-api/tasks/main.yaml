@@ -27,6 +27,10 @@
        virtualenv_command=/usr/local/bin/pyvenv
   become: yes
   become_user: munin
+- name: Delete payload download
+  file: path=/tmp/munin-api-{{munin_api_version}} state=absent
+  become: yes
+  become_user: munin
 - name: Create /var/run directory
   file: path=/var/run/munin-api state=directory mode=0755 owner=munin group=munin
   sudo: True
