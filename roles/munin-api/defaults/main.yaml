@@ -1,0 +1,8 @@
+---
+munin_api_version: 7fafc1e22fabf2182af6cc483053f774ba468fa1
+munin_api_bucket: releases.munin-api
+munin_api_address: 0.0.0.0:8080
+munin_api_database_host: postgresql-01.muninapp.com
+munin_api_database_username: munin
+munin_api_database_name: munin
+python3_version: 3.5.1

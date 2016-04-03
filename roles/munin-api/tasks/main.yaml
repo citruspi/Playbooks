@@ -1,0 +1,41 @@
+---
+- name: Create munin group
+  group: name=munin state=present
+  sudo: true
+- name: Create munin user
+  user: name=munin group=munin
+  sudo: true
+- name: Download release from S3
+  get_url: url=https://s3-us-west-2.amazonaws.com/{{munin_api_bucket}}/{{munin_api_version}}.zip dest=/tmp/munin-api-{{munin_api_version}}.zip
+  become: yes
+  become_user: munin
+- name: Create temporary directory for release
+  file: path=/tmp/munin-api-{{munin_api_version}} state=directory
+  become: yes
+  become_user: munin
+- name: Unarchive release
+  unarchive: src=/tmp/munin-api-{{munin_api_version}}.zip dest=/tmp/munin-api-{{munin_api_version}} copy=no
+  become: yes
+  become_user: munin
+- name: Rename release
+  shell: mv /tmp/munin-api-{{munin_api_version}}/* /tmp/munin-api-{{munin_api_version}}/munin-0.0.1-py3-none-any.whl
+  become: yes
+  become_user: munin
+- name: Install Munin
+  pip: virtualenv=/home/munin/virtualenv/
+       name='file:///tmp/munin-api-{{munin_api_version}}/munin-0.0.1-py3-none-any.whl'
+       virtualenv_command=/usr/local/bin/pyvenv
+  become: yes
+  become_user: munin
+- name: Create /var/run directory
+  file: path=/var/run/munin-api state=directory mode=0755 owner=munin group=munin
+  sudo: True
+- name: Copy the config
+  template: src=munin-api.service.j2 dest=/usr/lib/systemd/system/munin-api.service
+  sudo: True
+- name: Reload systemd
+  shell: systemctl daemon-reload
+  sudo: True
+- name: Reload service 
+  service: name=munin-api state=reloaded
+  sudo: True

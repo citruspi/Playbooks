@@ -1,0 +1,16 @@
+[Unit]
+Description=Munin-API
+After=syslog.target network.target
+
+[Service]
+PIDFile=/var/run/munin-api/munin-api.pid
+User=munin
+Group=munin
+WorkingDirectory=/home/munin
+ExecStart=/home/munin/virtualenv/bin/gunicorn --pid /var/run/munin-api/munin-api.pid --bind {{munin_api_address}} --env munin_db_name={{munin_api_database_name}} --env munin_db_user={{munin_api_database_username}} --env munin_db_password={{munin_api_database_password}} --env munin_db_host={{munin_api_database_host}} munin.api:server
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
