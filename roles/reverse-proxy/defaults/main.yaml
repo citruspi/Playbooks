@@ -6,6 +6,7 @@ reverse_proxy_nginx_confs:
   - xz.gy
   - rit.sex
   - voidbowels.com
+  - muninapp.com
 reverse_proxy_ssl_certificates:
   - com.rhokthehood.www
   - io.citruspi.*

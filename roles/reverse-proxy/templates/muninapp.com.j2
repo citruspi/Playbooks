@@ -1,0 +1,24 @@
+server {
+    listen          80;
+    server_name     api.muninapp.com;
+
+    return 301      https://api.muninapp.com$request_uri;
+}
+
+server {
+    listen                  443 http2 ssl;
+    server_name             api.muninapp.com;
+
+    ssl_certificate         /etc/nginx/ssl/com.muninapp.*.crt;
+    ssl_certificate_key     /etc/nginx/ssl/com.muninapp.*.key;
+
+    location / {
+        proxy_pass         http://api.munin;
+        proxy_set_header   Host                             $host;
+        proxy_set_header   X-Real-IP                        $remote_addr;
+        proxy_set_header   X-Forwarded-For                  $proxy_add_x_forwarded_for;
+
+        add_header         Access-Control-Allow-Origin          *;
+    add_header     X-Upstream               $upstream_http_host always;
+    }
+}
