@@ -1,0 +1,38 @@
+---
+- name: Install dependencies
+  yum: name={{ item }} state=present
+  with_items:
+  - zlib-devel
+  - bzip2-devel
+  - openssl-devel
+  - ncurses-devel
+  - libxml2-devel
+  - libxslt-devel
+  - readline-devel
+  - tk-devel
+  - gdbm-devel
+  - db4-devel
+  - libpcap-devel
+  - xz-devel
+  sudo: True
+- name: Download Python source code
+  get_url: url=https://www.python.org/ftp/python/{{ python3_version }}/Python-{{ python3_version }}.tgz dest=/tmp/Python-{{ python3_version }}.tgz force=yes
+  sudo: True
+- name: Unarchive Python source code
+  unarchive: src=/tmp/Python-{{ python3_version }}.tgz dest=/tmp/ copy=no
+  sudo: True
+- name: Configure the Python installation
+  command: ./configure --prefix=/usr/local LDFLAGS="-Wl,-rpath /usr/local/lib" --with-ensurepip=install
+  args:
+    chdir: /tmp/Python-{{ python3_version }}
+  sudo: True
+- name: Build Python 3
+  command: "make"
+  args:
+    chdir: /tmp/Python-{{ python3_version }}
+  sudo: True
+- name: Install Python 3
+  command: "make install"
+  args:
+    chdir: /tmp/Python-{{ python3_version }}
+  sudo: True
