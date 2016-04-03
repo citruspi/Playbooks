@@ -11,3 +11,4 @@ reverse_proxy_ssl_certificates:
   - com.rhokthehood.www
   - io.citruspi.*
   - com.mihirsingh.www
+  - com.muninapp.*
