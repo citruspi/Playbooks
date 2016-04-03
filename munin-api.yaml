@@ -1,0 +1,7 @@
+---
+- hosts: munin-api
+  user: "{{user}}"
+  roles:
+  - base
+  - newrelic
+  - munin-api

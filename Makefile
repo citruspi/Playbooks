@@ -16,4 +16,9 @@ redis:
 
 	ansible-playbook -i hosts.yaml redis.yaml
 
+munin-api:
+
+	ansible-playbook -i hosts.yaml munin-api.yaml
+
+
 .PHONY: front-end wintergarten reverse-proxy redis
